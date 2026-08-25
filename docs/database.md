@@ -1,52 +1,61 @@
 # FootIQ Database Design
 
-## MVP
+## Overview
 
-The first version of FootIQ will allow users to:
+The FootIQ MVP database will store football teams, players and player statistics.
 
-- Search for football players
-- View player profiles
-- View player statistics
-- View the player's team
+The first version will support:
 
-## Entities
+- Searching for players
+- Viewing player profiles
+- Viewing player statistics
+- Showing the player's current team
 
-### Team
+## Tables
+
+### Teams
+
+Stores information about football clubs.
 
 | Field | Type | Description |
 |---|---|---|
 | id | INTEGER | Unique team ID |
-| name | VARCHAR | Team name |
-| country | VARCHAR | Team's country |
-| league | VARCHAR | Team's league |
+| name | VARCHAR(100) | Team name |
+| country | VARCHAR(100) | Country |
+| league | VARCHAR(100) | League |
 
-### Player
+### Players
+
+Stores information about football players.
 
 | Field | Type | Description |
 |---|---|---|
 | id | INTEGER | Unique player ID |
-| name | VARCHAR | Player's name |
-| age | INTEGER | Player's age |
-| position | VARCHAR | Player's position |
-| nationality | VARCHAR | Player's nationality |
+| name | VARCHAR(100) | Player name |
+| age | INTEGER | Player age |
+| position | VARCHAR(50) | Playing position |
+| nationality | VARCHAR(100) | Nationality |
 | team_id | INTEGER | Player's team |
 
-### PlayerStats
+### Player Stats
+
+Stores player performance statistics for each season.
 
 | Field | Type | Description |
 |---|---|---|
 | id | INTEGER | Unique statistics ID |
-| player_id | INTEGER | Player |
-| appearances | INTEGER | Number of appearances |
+| player_id | INTEGER | Player ID |
+| season | VARCHAR(20) | Season |
+| appearances | INTEGER | Appearances |
 | minutes | INTEGER | Minutes played |
-| goals | INTEGER | Goals scored |
+| goals | INTEGER | Goals |
 | assists | INTEGER | Assists |
 | shots | INTEGER | Shots |
 | key_passes | INTEGER | Key passes |
 | tackles | INTEGER | Tackles |
 | interceptions | INTEGER | Interceptions |
-| xg | DECIMAL | Expected goals |
-| xa | DECIMAL | Expected assists |
+| xg | DECIMAL(5,2) | Expected goals |
+| xa | DECIMAL(5,2) | Expected assists |
 
 ## Relationships
 
@@ -54,19 +63,17 @@ A team can have many players.
 
 A player belongs to one team.
 
-A player has one set of statistics in the MVP.
+A player can have multiple statistical records across different seasons.
 
 ```text
 Team
- │
- │ 1
- │
- │
- │ *
+  |
+  | 1
+  |
+  | *
 Player
- │
- │ 1
- │
- │
- │ 1
-PlayerStats
+  |
+  | 1
+  |
+  | *
+Player Stats
